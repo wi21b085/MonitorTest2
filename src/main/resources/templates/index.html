@@ -15,35 +15,42 @@
 <body>
 <div style="margin-top:25%; text-align: center">
     <h1>Maintenance Monitor</h1>
-    <p onload="deliver()" id="message" style="font-size: 30px"></p>
-    <p style="font-size: 15px"><i>last update:
-        <datetime id='date-time'></datetime>
+    <p id="message" style="font-size: 30px"></p>
+    <p style="font-size: 20px"><i>last update:
+        <time id='date-time'></time>
     </i></p>
 </div>
 </body>
 
 <script type="text/javascript">
-    function deliver() {
-        fetch("http://localhost:8080/deliver")
-            .then(response => response.text())
-            .then(data => {
-                let message = document.getElementById("message");
-                message.innerHTML = data;
-            })
-        fetch("http://localhost:8080/color")
-            .then(response => response.text())
-            .then(data => {
-                $("body").css("background-color", data.toString()); <!-- hier wird farbe aus monitor genommen -->
-            })
-    }
-    deliver();
+    fetch("http://localhost:8080/deliver")
+        .then(response => response.text())
+        .then(data => {
+            let message = document.getElementById("message");
+            message.innerHTML = data;
+        })
+    fetch("http://localhost:8080/color")
+        .then(response => response.text())
+        .then(data => {
+            $("body").css("background-image", "linear-gradient(to right, white," + data.toString() + ",white)"); <!-- hier wird farbe aus monitor genommen -->
+        })
     let dt = new Date();
-    let dateTime = dt.getHours()+':'+dt.getMinutes()+':';
-    let sec = dt.getSeconds();
-    if(sec < 10)
-        dateTime = dateTime+'0'+sec;
+    let hrs = dt.getHours();
+    let dateTime;
+    if (hrs < 10)
+        dateTime = '0' + hrs;
     else
-        dateTime = dateTime+sec;
-    document.getElementById('date-time').innerHTML=dateTime; // https://www.howtocodeschool.com/2020/05/display-current-date-and-time-using-html-javascript.html
+        dateTime = hrs;
+    let min = dt.getMinutes();
+    if (min < 10)
+        dateTime = dateTime + ':0' + min;
+    else
+        dateTime = dateTime + ':' + min;
+    let sec = dt.getSeconds();
+    if (sec < 10)
+        dateTime = dateTime + ':0' + sec;
+    else
+        dateTime = dateTime + ':' + sec;
+    document.getElementById('date-time').innerHTML = dateTime; // https://www.howtocodeschool.com/2020/05/display-current-date-and-time-using-html-javascript.html
 </script>
 </html>

@@ -10,7 +10,7 @@ public class Monitor {
         }
     }
     public void set(String set) {
-        if(set != null){
+        if(set != null && !set.trim().equals("")){
             message = set;
             color = "red";
         }

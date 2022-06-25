@@ -8,10 +8,10 @@ import org.springframework.web.servlet.ModelAndView;
 public class MonitorController {
     Monitor mon = new Monitor();
 
-    @RequestMapping("/")
+    @GetMapping("/")
     public String index() {
         return "index";
-    }
+    } // https://stackoverflow.com/a/47170750
     @RequestMapping("/reset")
     public void reset(String reset){
         mon.reset(reset);
